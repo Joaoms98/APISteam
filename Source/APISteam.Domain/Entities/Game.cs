@@ -17,6 +17,10 @@ namespace APISteam.Domain.Entities
         [ForeignKey("Publisher")]
         public Guid PublisherId { get; set; }
         public Publisher Publisher { get; set; }
+        
+        [ForeignKey("Franchise")]
+        public Guid FranchiseId { get; set; }
+        public Franchise Franchise { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage ="the length of the field must be up to 100 characters long")]
@@ -31,7 +35,6 @@ namespace APISteam.Domain.Entities
 
 
         #region prop navigate
-        public virtual Franchise Franchise { get; set; }
         public virtual SystemRequirement SystemRequirement { get; set; }
         public virtual List<GameGenre> GameGenre { get; set; }
         public virtual List<Library> Library { get; set; }
