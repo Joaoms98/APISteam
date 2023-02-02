@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APISteam.Domain.Entities
+namespace APISteam.Core.Entities
 {
-    public class SystemRequeriment
+    public class GameGenre
     {
         
     }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APISteam.Infra.Entities
+namespace APISteam.Domain.Entities
 {
-    public class GameGenere
+    public class Genre
     {
         
     }

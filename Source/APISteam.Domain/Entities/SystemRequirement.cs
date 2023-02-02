@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace APISteam.Domain.Entities
 {
-    public class Genere
+    public class SystemRequirement
     {
         
     }
