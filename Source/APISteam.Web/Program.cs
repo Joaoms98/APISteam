@@ -1,8 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContextPool<DataContext>(opt =>
+                opt.UseMySql("server=localhost;port=3306;database=pokedexdatabase;user=root;password={Senha do seu banco de dados mysql};Persist Security Info=false;Connect Timeout=300",
+                        ServerVersion.AutoDetect("server=localhost;port=3306;database=pokedexdatabase;user=root;password={Senha do seu banco de dados mysql};Persist Security Info=false;Connect Timeout=300")));
+
 
 var app = builder.Build();
 
