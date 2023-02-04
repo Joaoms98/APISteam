@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using APISteam.Core.Entities;
 
 namespace APISteam.Domain.Entities
 {
