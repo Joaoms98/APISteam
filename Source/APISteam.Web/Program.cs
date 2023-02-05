@@ -1,3 +1,4 @@
+using APISteam.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,16 +7,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContextPool<DataContext>(opt =>
-                opt.UseMySql("server=localhost;port=3306;database=pokedexdatabase;user=root;password={Senha do seu banco de dados mysql};Persist Security Info=false;Connect Timeout=300",
-                        ServerVersion.AutoDetect("server=localhost;port=3306;database=pokedexdatabase;user=root;password={Senha do seu banco de dados mysql};Persist Security Info=false;Connect Timeout=300")));
 
+
+string mySqlConnection =
+              builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContextPool<DataContext>(opt =>
+                opt.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+
+builder.Services.AddScoped<DataContext, DataContext>();
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    using(var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+        dbContext.Database.EnsureCreated();
+    }
+    
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
