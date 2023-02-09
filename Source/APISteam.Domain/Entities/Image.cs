@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APISteam.Domain.Entities
 {
+    [Table("Image")]
     public class Image
     {
         [Key]
@@ -13,8 +14,5 @@ namespace APISteam.Domain.Entities
         public string Link {get; set; }
 
         public Game Game {get; set; }
-
-
-        
     }
 }

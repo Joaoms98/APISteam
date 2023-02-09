@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APISteam.Domain.Entities
 {
+    [Table("SystemRequirement")]
     public class SystemRequirement
     {
         [Key]

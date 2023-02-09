@@ -14,6 +14,7 @@ namespace APISteam.Infra.DataContext
         public DbSet<Developer> Developer { get; set; }
 
         public DbSet<Franchise> Franchise { get;set; }
+
         public DbSet<Game> Game { get; set; }
 
         public DbSet<GameGenre> GameGenre { get; set; }
@@ -31,12 +32,5 @@ namespace APISteam.Infra.DataContext
         public DbSet<User> User { get; set; }
 
         public DbSet<Video> Video { get; set; }
-
-
-
-        
-
-
-
     }
 }

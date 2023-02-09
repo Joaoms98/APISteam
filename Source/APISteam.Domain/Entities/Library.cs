@@ -1,14 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace APISteam.Domain.Entities
 {
+    [Table("Library")]
     public class Library
     {
         [Key]
         [ForeignKey("User")]
         public Guid UserId { get; set; }
+
         [ForeignKey("Game")]
         public Guid GameId { get; set; }
 

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APISteam.Domain.Entities
 {
+    [Table("GameGenre")]
     public class GameGenre
     {
         [Key]

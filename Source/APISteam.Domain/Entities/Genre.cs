@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APISteam.Domain.Entities
 {
+    [Table("Genre")]
     public class Genre
     {
         [Key]
@@ -10,6 +12,6 @@ namespace APISteam.Domain.Entities
         [Required]
         public int Type { get; set; }
 
-        public virtual GameGenre GameGenre { get; set; }
+        public virtual List<GameGenre> GameGenre { get; set; }
     }
 }
