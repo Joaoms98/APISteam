@@ -32,6 +32,9 @@ namespace APISteam.Domain.Entities
         [StringLength(300, ErrorMessage ="the length of the field must be up to 300 characters long")]
         public string Description { get; set; }
 
+        [Required]
+        public string Logo { get; set; }
+
 
         #region prop navigate
         public virtual SystemRequirement SystemRequirement { get; set; }

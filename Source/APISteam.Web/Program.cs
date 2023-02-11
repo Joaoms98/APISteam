@@ -1,4 +1,6 @@
-using APISteam.Infra.DataContext;
+using APISteam.Domain.Interface;
+using APISteam.Infra.Data;
+using APISteam.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddDbContextPool<DataContext>(opt =>
                 opt.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection)));
 
 builder.Services.AddScoped<DataContext, DataContext>();
+
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
