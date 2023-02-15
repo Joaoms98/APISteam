@@ -30,18 +30,20 @@ namespace APISteam.Infra.Repositories
             return await Task.FromResult(game);
         }
 
-        public async Task<IEnumerable<Game>> ListWithSmallerPriceAsync(decimal price)
+        public async Task<IEnumerable<Game>> ListWithSmallerPriceAsync(double price)
         {
             IEnumerable<Game> games = _context.Game
                 .Where(g => g.Price <= price)
-                .Include(g => g.Comment)
+                .Include(g => g.Comment.Where(c => c.Review == true))
                 .Select(g => new Game{
                     Logo = g.Logo,
                     Price = g.Price, 
                     Comment = g.Comment
-                });
+                })
+                .OrderBy(g => g.Comment.Count())
+                .Take(8);
 
-                return await Task.FromResult(games);
+            return await Task.FromResult(games);
         }
     }
 }

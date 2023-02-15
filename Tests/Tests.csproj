@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>Disable</Nullable>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Source\APISteam.infra\APISteam.Infra.csproj" />
+    <ProjectReference Include="..\Source\APISteam.Infra\APISteam.Infra.csproj" />
     <ProjectReference Include="..\Source\APISteam.Domain\APISteam.Domain.csproj" />
     <ProjectReference Include="..\Source\APISteam.Core\APISteam.Core.csproj" />
   </ItemGroup>

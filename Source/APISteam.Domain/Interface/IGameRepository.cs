@@ -4,7 +4,7 @@ namespace APISteam.Domain.Interface
 {
     public interface IGameRepository
     {
-        Task<IEnumerable<Game>> ListWithSmallerPriceAsync(Decimal price);
+        Task<IEnumerable<Game>> ListWithSmallerPriceAsync(double price);
 
         Task<Game> FindByIdWithAllRelationsAsync(Guid id);
     }

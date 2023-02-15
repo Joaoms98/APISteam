@@ -26,7 +26,7 @@ namespace APISteam.Domain.Entities
         public string Title { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [Required]
         [StringLength(300, ErrorMessage ="the length of the field must be up to 300 characters long")]
