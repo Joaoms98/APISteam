@@ -29,16 +29,33 @@ namespace Tests.RepositoriesTests
         public void ListWithSmallerPriceAsync_WhenCalled_ReturnSuccess(double price)
         {
             //Arrange
+            DropDataBase();
             Guid id = Guid.NewGuid();
             List<Game> data = SetupData(id);
 
             //Action
-            Task<IEnumerable<Game>> actual = repository.ListWithSmallerPriceAsync(price);
+            IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(price);
 
             //Assert
             Random random = new Random();
-            Assert.AreEqual(8,actual.Result.Count());
-            Assert.IsTrue(actual.Result.ElementAt(random.Next(0,8)).Price <= price);
+            Assert.AreEqual(8,actual.Count());
+            Assert.AreEqual("url logo game assert",actual.ElementAt(0).Logo);
+            Assert.IsTrue(actual.ElementAt(random.Next(0,8)).Price <= price);
+        }
+
+        [TestMethod]
+        public void ListWithSmallerPriceAsync_WhenCalled_ReturnEmpty()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            List<Game> data = SetupData(id);
+
+            //Action
+            IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(2);
+
+            //Assert
+            Assert.AreEqual(0,actual.Count());
         }
 
         private List<Game> SetupData(Guid Id)
@@ -104,12 +121,50 @@ namespace Tests.RepositoriesTests
                 );
             }
 
+            var gameAssert =  new Game{
+                    Id = Guid.NewGuid(),
+                    DeveloperId = developer.Id,
+                    PublisherId = publisher.Id,
+                    FranchiseId = franchise.Id,
+                    Title = $"Title game test",
+                    Price = 18.99,
+                    Description = "Description test",
+                    Logo = "url logo game assert"
+                };
+
             context.AddRange(games);
+            context.Add(gameAssert);
             context.SaveChanges();
 
             //Set Comments
+            List<Comment> comments = new List<Comment>();
+
+            comments.Add(new Comment
+            {
+                Id = Guid.NewGuid(),
+                GameId = gameAssert.Id,
+                Description = "achei fera",
+                Review = true
+            });
+
+            comments.Add(new Comment
+            {
+                Id = Guid.NewGuid(),
+                GameId = gameAssert.Id,
+                Description = "achei massa",
+                Review = true
+            });
+
+            context.AddRange(comments);
+            context.SaveChanges();
 
             return games;
+        }
+
+        private void DropDataBase()
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
         }
     }
 }

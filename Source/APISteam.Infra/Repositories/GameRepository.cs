@@ -14,7 +14,7 @@ namespace APISteam.Infra.Repositories
             _context = context;
         }
 
-        public async Task<Game> FindByIdWithAllRelationsAsync(Guid id)
+        public Game FindByIdWithAllRelationsAsync(Guid id)
         {
             Game game =  _context.Game
             .Where(x => x.Id == id)
@@ -27,10 +27,10 @@ namespace APISteam.Infra.Repositories
             .Include(g => g.SystemRequirement)
             .FirstOrDefault();
 
-            return await Task.FromResult(game);
+            return game;
         }
 
-        public async Task<IEnumerable<Game>> ListWithSmallerPriceAsync(double price)
+        public IEnumerable<Game> ListWithSmallerPriceAsync(double price)
         {
             IEnumerable<Game> games = _context.Game
                 .Where(g => g.Price <= price)
@@ -40,10 +40,10 @@ namespace APISteam.Infra.Repositories
                     Price = g.Price, 
                     Comment = g.Comment
                 })
-                .OrderBy(g => g.Comment.Count())
+                .OrderByDescending(g => g.Comment.Count())
                 .Take(8);
 
-            return await Task.FromResult(games);
+            return games;
         }
     }
 }

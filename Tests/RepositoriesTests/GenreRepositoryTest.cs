@@ -32,23 +32,24 @@ namespace Tests.RepositoriesTests
             SetupGenres();
 
             //Action
-            Task<IEnumerable<Genre>> actual = repository.ListAllAsync();
+            IEnumerable<Genre> actual = repository.ListAllAsync();
 
             //Assert   
-            Assert.AreEqual(actual.Result.Count(), 25);
-            Assert.AreEqual(actual.Result.ElementAt(1).Type, 0);
+            Assert.AreEqual(actual.Count(), 25);
+            Assert.AreEqual(actual.ElementAt(1).Type, 0);
         }
 
         [TestMethod]
         public void ListAllGenreAsync_WhenCalled_ReturnEmpty()
         {
             //Arrange
+            DropDataBase();
 
             //Action
-            Task<IEnumerable<Genre>> actual = repository.ListAllAsync();
+            IEnumerable<Genre> actual = repository.ListAllAsync();
 
             //Assert   
-            Assert.AreEqual(actual.Result.Count(), 0);
+            Assert.AreEqual(0, actual.Count());
         }
 
         private void SetupGenres()
@@ -68,6 +69,11 @@ namespace Tests.RepositoriesTests
             context.AddRange(genres);
             context.SaveChanges();
         }
-        
+
+        private void DropDataBase()
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
     }
 }

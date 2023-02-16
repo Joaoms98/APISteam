@@ -13,7 +13,7 @@ namespace APISteam.Infra.Repositories
             _context = context;
         }
         
-        public async Task<IEnumerable<Genre>> ListAllAsync()
+        public IEnumerable<Genre> ListAllAsync()
         {
             IEnumerable<Genre> genres = _context.Genre
             .Select(g => new Genre{
@@ -22,7 +22,7 @@ namespace APISteam.Infra.Repositories
             })
             .ToList();
 
-            return await Task.FromResult(genres);
+            return genres;
         }
     }
 }
