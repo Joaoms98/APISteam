@@ -6,6 +6,6 @@ namespace APISteam.Domain.Interface
     {
         IEnumerable<Game> ListWithSmallerPriceAsync(double price);
 
-        Game FindByIdWithAllRelationsAsync(Guid id);
+        // Game FindByIdWithAllRelationsAsync(Guid id);
     }
 }

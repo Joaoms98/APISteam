@@ -158,6 +158,58 @@ namespace Tests.RepositoriesTests
             context.AddRange(comments);
             context.SaveChanges();
 
+            // //Set Videos
+            // List<Video> videos = new List<Video>();
+
+            // videos.Add(new Video
+            // {   
+            //     GameId = gameAssert.Id,
+            //     Link ="url_Link"
+            // });
+
+            // videos.Add(new Video
+            // {   
+            //     GameId = gameAssert.Id,
+            //     Link ="url_Link"
+            // });
+
+            // context.AddRange(videos);
+            // context.SaveChanges();
+
+            // //Set Images
+            // List<Image> images = new List<Image>();
+
+            // images.Add(new Image{
+            //     GameId = gameAssert.Id,
+            //     Link = "url_Link"
+            // });
+
+            // images.Add(new Image{
+            //     GameId = gameAssert.Id,
+            //     Link = "url_Link"
+            // });
+
+            // context.AddRange(images);
+            // context.SaveChanges();
+
+            // //Set SystemRequirements
+            // List<SystemRequirement> systemRequirements = new List<SystemRequirement>();
+
+            // systemRequirements.Add(new SystemRequirement{
+            //     Id = Guid.NewGuid(),
+            //     GameId = gameAssert.Id,
+            //     MinMax = 1,
+            //     Processor = "Intel core i7",
+            //     Memory = "8GB",
+            //     Graphics = "Nvidia GForce ",
+            //     DirectX = "12X",
+            //     Storage = "124GB",
+            //     AdditionalInfo = "need a banana hat"
+            // });
+
+            // context.AddRange(systemRequirements);
+            // context.SaveChanges();
+
             return games;
         }
 

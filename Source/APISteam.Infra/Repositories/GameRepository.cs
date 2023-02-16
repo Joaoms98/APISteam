@@ -14,21 +14,21 @@ namespace APISteam.Infra.Repositories
             _context = context;
         }
 
-        public Game FindByIdWithAllRelationsAsync(Guid id)
-        {
-            Game game =  _context.Game
-            .Where(x => x.Id == id)
-            .Include(g => g.Video)
-            .Include(g => g.Image)
-            .Include(g => g.Comment)
-            .Include(g => g.Developer)
-            .Include(g => g.Publisher)
-            .Include(g => g.GameGenre)
-            .Include(g => g.SystemRequirement)
-            .FirstOrDefault();
+        // public Game FindByIdWithAllRelationsAsync(Guid id)
+        // {
+        //     Game game =  _context.Game
+        //     .Where(x => x.Id == id)
+        //     .Include(g => g.Video)
+        //     .Include(g => g.Image)
+        //     .Include(g => g.Comment)
+        //     .Include(g => g.Developer)
+        //     .Include(g => g.Publisher)
+        //     .Include(g => g.GameGenre)
+        //     .Include(g => g.SystemRequirement)
+        //     .FirstOrDefault();
 
-            return game;
-        }
+        //     return game;
+        // }
 
         public IEnumerable<Game> ListWithSmallerPriceAsync(double price)
         {
