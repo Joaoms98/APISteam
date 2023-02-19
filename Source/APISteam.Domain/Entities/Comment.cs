@@ -19,5 +19,8 @@ namespace APISteam.Domain.Entities
 
         [Required]
         public bool Review { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
     }
 }

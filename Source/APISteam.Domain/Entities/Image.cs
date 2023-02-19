@@ -7,6 +7,8 @@ namespace APISteam.Domain.Entities
     public class Image
     {
         [Key]
+        public Guid Id { get; set; }
+        
         [ForeignKey("Game")]
         public Guid GameId {get; set; } 
            
