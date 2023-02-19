@@ -34,6 +34,9 @@ namespace APISteam.Domain.Entities
         [StringLength(250, ErrorMessage = "The city can be a maximum of 250 characters")]
         public string City { get; set; }
 
+        [StringLength(500)]
+        public string Photo { get; set; }
+
         public virtual Developer Developer { get; set; }
         public virtual Publisher  Publisher { get; set; }
         public virtual List<Library> Library { get; set; }

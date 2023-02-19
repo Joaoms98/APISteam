@@ -12,6 +12,10 @@ namespace APISteam.Domain.Entities
         [ForeignKey("Game")]
         public Guid GameId { get; set; }
         public Game Game { get; set; }
+       
+        [ForeignKey("User")]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
 
         [Required]
         [StringLength(500, ErrorMessage = "The description can be a maximum of 500 characters")]
