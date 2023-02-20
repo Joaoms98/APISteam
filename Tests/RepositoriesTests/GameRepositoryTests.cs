@@ -2,6 +2,7 @@ using APISteam.Domain.Entities;
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
 using APISteam.Infra.Repositories;
+using APISteam.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Tests.RepositoriesTests
@@ -10,6 +11,7 @@ namespace Tests.RepositoriesTests
     public class GameRepositoryTests
     {
         private DataContext context;
+        private FeaturedAndRecommendsFilter filter;
         private IGameRepository repository;
 
         [TestInitialize]
@@ -20,18 +22,19 @@ namespace Tests.RepositoriesTests
             .Options;
 
             context = new DataContext(options);
-            repository = new GameRepository(context);
+            filter = new FeaturedAndRecommendsFilter(context);
+            repository = new GameRepository(context, filter);
         }
 
         [TestMethod]
         [DataRow(20.00)]
         [DataRow(30.00)]
-        public void ListWithSmallerPriceAsync_WhenCalled_ReturnSuccess(double price)
+        public void ListWithSmallerPrice_WhenCalled_ReturnSuccess(double price)
         {
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            List<Game> data = SetupData(id);
+            (List<Game>, User) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(price);
@@ -44,12 +47,12 @@ namespace Tests.RepositoriesTests
         }
 
         [TestMethod]
-        public void ListWithSmallerPriceAsync_WhenCalled_ReturnEmpty()
+        public void ListWithSmallerPrice_WhenCalled_ReturnEmpty()
         {
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            List<Game> data = SetupData(id);
+            (List<Game>, User) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(2);
@@ -58,7 +61,22 @@ namespace Tests.RepositoriesTests
             Assert.AreEqual(0,actual.Count());
         }
 
-        private List<Game> SetupData(Guid Id)
+        [TestMethod]
+        public void ListByRelevance_WhenCalled_ReturnSuccess()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            (List<Game>, User) data = SetupData(id);
+
+            //Action
+            IEnumerable<Game> actual = repository.ListByRelevance(Guid.Empty);
+
+            //Assert
+            Assert.AreEqual(id,actual.ElementAt(0).Id);
+        }
+
+        private (List<Game>, User) SetupData(Guid id)
         {
            //Set Developer
             Developer developer = new Developer
@@ -88,6 +106,33 @@ namespace Tests.RepositoriesTests
             };
 
             context.Add(franchise);
+            context.SaveChanges();
+
+            //Set Genres
+            List<Genre> genres = new List<Genre>();
+
+            genres.Add(new Genre
+            {
+                Id = Guid.NewGuid(),
+                Type = 1,
+                Image = "url image"
+            });
+
+            genres.Add(new Genre
+            {
+                Id = Guid.NewGuid(),
+                Type = 2,
+                Image = "url image"
+            });
+
+            genres.Add(new Genre
+            {
+                Id = Guid.NewGuid(),
+                Type = 3,
+                Image = "url image"
+            });
+
+            context.AddRange(genres);
             context.SaveChanges();
 
             //Set Games
@@ -122,7 +167,7 @@ namespace Tests.RepositoriesTests
             }
 
             var gameAssert =  new Game{
-                    Id = Guid.NewGuid(),
+                    Id = id,
                     DeveloperId = developer.Id,
                     PublisherId = publisher.Id,
                     FranchiseId = franchise.Id,
@@ -134,6 +179,26 @@ namespace Tests.RepositoriesTests
 
             context.AddRange(games);
             context.Add(gameAssert);
+            context.SaveChanges();
+
+            //Set GameGenre
+            List<GameGenre> gameGenres = new List<GameGenre>();
+
+            gameGenres.Add(new GameGenre
+            {
+                Id = Guid.NewGuid(),
+                GameId = gameAssert.Id,
+                GenreId = genres[0].Id
+            });
+
+            gameGenres.Add(new GameGenre
+            {
+                Id = Guid.NewGuid(),
+                GameId = gameAssert.Id,
+                GenreId = genres[0].Id
+            });
+
+            context.AddRange(gameGenres);
             context.SaveChanges();
 
             //Set Comments
@@ -158,39 +223,63 @@ namespace Tests.RepositoriesTests
             context.AddRange(comments);
             context.SaveChanges();
 
-            // //Set Videos
-            // List<Video> videos = new List<Video>();
+            //Set Videos
+            List<Video> videos = new List<Video>();
 
-            // videos.Add(new Video
-            // {   
-            //     GameId = gameAssert.Id,
-            //     Link ="url_Link"
-            // });
+            videos.Add(new Video
+            {   
+                GameId = gameAssert.Id,
+                Link ="url_Link"
+            });
 
-            // videos.Add(new Video
-            // {   
-            //     GameId = gameAssert.Id,
-            //     Link ="url_Link"
-            // });
+            videos.Add(new Video
+            {   
+                GameId = gameAssert.Id,
+                Link ="url_Link"
+            });
 
-            // context.AddRange(videos);
-            // context.SaveChanges();
+            context.AddRange(videos);
+            context.SaveChanges();
 
-            // //Set Images
-            // List<Image> images = new List<Image>();
+            //Set Images
+            List<Image> images = new List<Image>();
 
-            // images.Add(new Image{
-            //     GameId = gameAssert.Id,
-            //     Link = "url_Link"
-            // });
+            images.Add(new Image{
+                GameId = gameAssert.Id,
+                Link = "url_Link"
+            });
 
-            // images.Add(new Image{
-            //     GameId = gameAssert.Id,
-            //     Link = "url_Link"
-            // });
+            images.Add(new Image{
+                GameId = gameAssert.Id,
+                Link = "url_Link"
+            });
 
-            // context.AddRange(images);
-            // context.SaveChanges();
+            context.AddRange(images);
+            context.SaveChanges();
+
+            //Set User
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                NickName = "RicardoBr",
+                Email = "RicardoBr@gmail.com",
+                Password = "RicardoBr123",
+                Photo = "12312415125"
+            };
+            context.Add(user);
+            context.SaveChanges();
+
+            //Set Library
+            List<Library> libraries = new List<Library>(); 
+            
+            libraries.Add(new Library{
+                GameId = gameAssert.Id,
+                UserId = user.Id,
+                GameHours = 50
+            });
+
+            context.AddRange(libraries);
+            context.SaveChanges();
 
             // //Set SystemRequirements
             // List<SystemRequirement> systemRequirements = new List<SystemRequirement>();
@@ -210,7 +299,7 @@ namespace Tests.RepositoriesTests
             // context.AddRange(systemRequirements);
             // context.SaveChanges();
 
-            return games;
+            return (games, user);
         }
 
         private void DropDataBase()
