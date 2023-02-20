@@ -7,6 +7,8 @@ namespace APISteam.Domain.Entities
     public class Library
     {
         [Key]
+        public Guid Id { get; set; }
+        
         [ForeignKey("User")]
         public Guid UserId { get; set; }
 

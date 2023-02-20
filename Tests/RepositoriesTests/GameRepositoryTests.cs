@@ -76,6 +76,21 @@ namespace Tests.RepositoriesTests
             Assert.AreEqual(id,actual.ElementAt(0).Id);
         }
 
+        [TestMethod]
+        public void ListByRelevance_WhenCalledWithUserId_ReturnSuccess()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            (List<Game>, User) data = SetupData(id);
+
+            //Action
+            IEnumerable<Game> actual = repository.ListByRelevance(data.Item2.Id);
+
+            //Assert
+            Assert.AreEqual(id,actual.ElementAt(0).Id);
+        }
+
         private (List<Game>, User) SetupData(Guid id)
         {
            //Set Developer
@@ -149,7 +164,8 @@ namespace Tests.RepositoriesTests
                         Title = $"Title game test {i}",
                         Price = 19.99,
                         Description = "Description test",
-                        Logo = "url logo"
+                        Logo = "url logo",
+                        PredominantGenre = 1
                     }
                 );
                 games.Add(
@@ -174,7 +190,8 @@ namespace Tests.RepositoriesTests
                     Title = $"Title game test",
                     Price = 18.99,
                     Description = "Description test",
-                    Logo = "url logo game assert"
+                    Logo = "url logo game assert",
+                    PredominantGenre = 1
                 };
 
             context.AddRange(games);

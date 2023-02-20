@@ -1,7 +1,7 @@
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
 using APISteam.Infra.Repositories;
-using APISteam.Infra.Services;
+using APISteam.Web.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +17,15 @@ builder.Services.AddDbContextPool<DataContext>(opt =>
 
 builder.Services.AddScoped<DataContext, DataContext>();
 
+// repository dependency injections.
+
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<FeaturedAndRecommendsFilter, FeaturedAndRecommendsFilter>();
 
+
+builder.Services.AddApplicationServices();
+builder.Services.AddDomainServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

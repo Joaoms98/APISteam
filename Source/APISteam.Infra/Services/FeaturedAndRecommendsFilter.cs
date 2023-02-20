@@ -34,34 +34,23 @@ public class FeaturedAndRecommendsFilter
 
     public IEnumerable<Game> RelevanceFilterByUserLibrary(Guid? userId)
     {
-        List<Library> libraryByUserId = _context.Library
+        var gamesByUserId = _context.Library
             .Where(l => l.UserId == userId)
-            .Select(l => new Library{
-                GameId = l.GameId
+            .Select(l => new{
+                Game = l.Game
             })
             .ToList();
 
-        if(libraryByUserId.Count() == 0)
+        if(gamesByUserId.Count() == 0)
         {
             return RelevanceFilter();
         }
-        
+
         List<int> genresTypes = new List<int>();
 
-        foreach(var library in libraryByUserId)
+        foreach(var game in gamesByUserId)
         {
-            List<Genre> gameGenres = _context.GameGenre
-                .Include(gg => gg.Genre)
-                .Where(gg => gg.GameId == library.GameId)
-                .Select(gg => new Genre{
-                    Type = gg.Genre.Type
-                })
-                .ToList();
-            
-            foreach(var genre in gameGenres)
-            {
-                genresTypes.Add(genre.Type);
-            }
+            genresTypes.Add(game.Game.PredominantGenre);
         }
 
         var genresOccurrences = genresTypes
@@ -80,17 +69,16 @@ public class FeaturedAndRecommendsFilter
 
         for(int i =0; i < genresOccurrences.Count();i++)
         {
-            gamesFilterByRelevanceAndGenres.AddRange( _context.GameGenre
-                .Include(gg => gg.Genre)
-                .Include(gg => gg.Game)
-                .OrderByDescending(gg => gg.Game.Library.Count())
-                .Where(gg => gg.Genre.Type == genresOccurrences.ElementAt(i).Key)
-                .Select(gg => new Game{
-                    Id = gg.Game.Id,
-                    Logo = gg.Game.Logo,
-                    Title = gg.Game.Title,
-                    Price = gg.Game.Price,
-                    Image = gg.Game.Image.Take(4).ToList()
+            gamesFilterByRelevanceAndGenres.AddRange( _context.Game
+                .Include(g => g.Library)
+                .Where(g => g.PredominantGenre == genresOccurrences.ElementAt(i).Key)
+                .OrderByDescending(g => g.Library.Count())
+                .Select(g => new Game{
+                    Id = g.Id,
+                    Logo = g.Logo,
+                    Title = g.Title,
+                    Price = g.Price,
+                    Image = g.Image.Take(4).ToList()
                 })
                 .Take(4)
                 .ToList()
