@@ -37,7 +37,6 @@ namespace Tests.RepositoriesTests
 
             //Assert
             Assert.AreEqual("achei fera", actual.ElementAt(0).Description);
-            
 
         }
 
