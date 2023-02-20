@@ -1,6 +1,7 @@
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
 using APISteam.Infra.Repositories;
+using APISteam.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddScoped<DataContext, DataContext>();
 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<FeaturedAndRecommendsFilter, FeaturedAndRecommendsFilter>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
