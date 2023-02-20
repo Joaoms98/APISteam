@@ -33,6 +33,7 @@
     <ProjectReference Include="..\APISteam.Core\APISteam.Core.csproj" />
     <ProjectReference Include="..\APISteam.Domain\APISteam.Domain.csproj" />
     <ProjectReference Include="..\APISteam.Infra\APISteam.Infra.csproj" />
+    <ProjectReference Include="..\APISteam.Infra.IoC\APISteam.Infra.IoC.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
