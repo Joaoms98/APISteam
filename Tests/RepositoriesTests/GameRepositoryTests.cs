@@ -295,12 +295,6 @@ namespace Tests.RepositoriesTests
                 GameHours = 50
             });
 
-            libraries.Add(new Library{
-                GameId = games[0].Id,
-                UserId = user.Id,
-                GameHours = 50
-            });
-
             context.AddRange(libraries);
             context.SaveChanges();
 
