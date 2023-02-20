@@ -36,7 +36,7 @@ namespace Tests.RepositoriesTests
             IEnumerable<Comment> actual = repository.ListByGameId(id);
 
             //Assert
-            Assert.AreEqual(id, actual.ElementAt(1).GameId);
+            Assert.AreEqual("achei fera", actual.ElementAt(0).Description);
             
 
         }

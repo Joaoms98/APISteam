@@ -35,6 +35,8 @@ namespace APISteam.Domain.Entities
         [Required]
         public string Logo { get; set; }
 
+        [Required]
+        public int PredominantGenre { get; set; }
 
         #region prop navigate
         public virtual SystemRequirement SystemRequirement { get; set; }
