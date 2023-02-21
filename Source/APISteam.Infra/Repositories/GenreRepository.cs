@@ -13,7 +13,7 @@ namespace APISteam.Infra.Repositories
             _context = context;
         }
         
-        public IEnumerable<Genre> ListAllAsync()
+        public IEnumerable<Genre> ListAll()
         {
             IEnumerable<Genre> genres = _context.Genre
             .Select(g => new Genre{

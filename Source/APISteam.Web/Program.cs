@@ -1,3 +1,4 @@
+using APISteam.Domain.AutoMapper;
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
 using APISteam.Infra.Repositories;
@@ -26,9 +27,11 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddDomainServices();
+builder.Services.AddAutoMapperSettings("APISteam.Domain", "APISteam.Web");
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
@@ -44,6 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseHsts();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

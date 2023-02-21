@@ -1,3 +1,4 @@
+using APISteam.Domain.UseCases.Genre;
 using APISteam.Infra.Services;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ public static class IoCWrapper
 
     public static void RegisterUseCases(IServiceCollection services)
     {
+        services.AddScoped<ListAllGenresUseCase>();
     }
 
     public static void ConfigureDomainServices(IServiceCollection services)

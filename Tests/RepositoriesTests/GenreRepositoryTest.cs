@@ -32,7 +32,7 @@ namespace Tests.RepositoriesTests
             SetupGenres();
 
             //Action
-            IEnumerable<Genre> actual = repository.ListAllAsync();
+            IEnumerable<Genre> actual = repository.ListAll();
 
             //Assert   
             Assert.AreEqual(actual.Count(), 25);
@@ -46,7 +46,7 @@ namespace Tests.RepositoriesTests
             DropDataBase();
 
             //Action
-            IEnumerable<Genre> actual = repository.ListAllAsync();
+            IEnumerable<Genre> actual = repository.ListAll();
 
             //Assert   
             Assert.AreEqual(0, actual.Count());

@@ -4,6 +4,6 @@ namespace APISteam.Domain.Interface
 {
     public interface IGenreRepository
     {
-        IEnumerable<Genre> ListAllAsync();
+        IEnumerable<Genre> ListAll();
     }
 }
