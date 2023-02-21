@@ -39,7 +39,7 @@ namespace Tests.RepositoriesTests
         public void UpdateUser_WhenCalled_ReturnSuccess()
         {
             //Arrange
-            User user = SetupUsers();
+            User user = SetupUser();
             //Action
             repository.Update(user.Id,"CanelaArg","12345","Victor","Um cara legal","Argentina","Santa Fé",
             "Venado Tuerto","1231254251asdasdasda");
@@ -50,8 +50,53 @@ namespace Tests.RepositoriesTests
             Assert.AreEqual("Argentina",actual.Country);
 
         }
+
+        [TestMethod]
+        public void DeleteUser_WhenCalled_ReturnSuccess()
+        {
+            //Arrange
+            User user = SetupUser();
+            //Action
+            repository.Delete(user.Id);
+            //Assert
+            var actual = context.User.Find(user.Id);
+            Assert.IsNull(actual);
+        }
+
+        [TestMethod]
+        public void GetUserById_WhenCalled_ReturnSuccess()
+        {
+            //Arrange
+            User user = SetupUser();
+            //Action
+            var actual = repository.GetById(user.Id);
+            //Assert
+            Assert.AreEqual(actual.Id,user.Id);
+        }
+
+        [TestMethod]
+        public void ListAllUsers_WhenCalled_ReturnSucess()
+        {
+            //Arrange
+            List<User> user = SetupListUsers();
+            //Action
+            var actual = repository.ListAll();
+            //Assert
+            Assert.AreEqual(actual.Count(),user.Count());
+        }
+
+        [TestMethod]
+        public void ListUserByNickName_WhenCalled_ReturnSucess()
+        {
+            //Arrange
+            List<User> users = SetupListUsers();
+            //Action
+            var actual = repository.ListByNickName("Canela");
+            //Assert
+            Assert.IsTrue(actual.Where(a => a.NickName.Contains("Canela")).Count() == 10);
+        }
         
-        private User SetupUsers()
+        private User SetupUser()
         {
             var user = new User()
             {
@@ -65,6 +110,42 @@ namespace Tests.RepositoriesTests
             context.SaveChanges();
 
             return user;
+        }
+        
+        private List<User> SetupListUsers()
+        {
+            List<User> users = new List<User>();
+
+            for(int i=0;i<10;i++)
+            {
+                users.Add
+                (
+                 new User
+                 {
+                    Id = Guid.NewGuid(),
+                    Email = $"canelinha{i}@gmail.com",
+                    Password = "1234",
+                    Country = "Brasil",
+                    NickName = $"CanelaBr{i}"
+                 }
+                );
+            }
+
+             var user = new User()
+            {
+                Id = Guid.NewGuid(),
+                NickName = "51Br",
+                Email = "51Br@gmail.com",
+                Password = "1235",
+                Country = "Brasil"
+            };
+            
+            context.Add(user);
+            context.AddRange(users);
+            context.SaveChanges();
+
+            return users;
+            
         }
         
         
