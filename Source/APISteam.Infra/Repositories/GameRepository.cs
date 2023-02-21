@@ -1,3 +1,4 @@
+using APISteam.Core.Utils;
 using APISteam.Domain.Entities;
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
@@ -58,6 +59,17 @@ namespace APISteam.Infra.Repositories
             }
 
             return _filter.RelevanceFilterByUserLibrary(userId);
+        }
+
+        public IEnumerable<Game> SearchByParams(string param)
+        {
+            var games = _context.Game
+                .Where(x => x.Title.Contains(param) 
+                    || x.PredominantGenre == param.EncodeToIntGenreEnum()
+                )
+                .ToList();
+
+            return games;
         }
     }
 }

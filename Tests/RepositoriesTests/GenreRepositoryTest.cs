@@ -61,7 +61,7 @@ namespace Tests.RepositoriesTests
                 genres.Add(new Genre
                 {
                     Id= Guid.NewGuid(),
-                    Type= (int)GenreTypeEnum.Action,
+                    Type= (int)GenreTypeEnum.action,
                     Image= $"Url_image{i}"
                 });
             }

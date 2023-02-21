@@ -91,6 +91,36 @@ namespace Tests.RepositoriesTests
             Assert.AreEqual(id,actual.ElementAt(0).Id);
         }
 
+        [TestMethod]
+        public void SearchByParams_WhenCalledWithTitle_ReturnSuccess()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            (List<Game>, User) data = SetupData(id);
+
+            //Action
+            IEnumerable<Game> actual = repository.SearchByParams("Title game test assert");
+
+            //Assert
+            Assert.AreEqual(1,actual.Count());
+        }
+
+        [TestMethod]
+        public void SearchByParams_WhenCalledWithGenre_ReturnSuccess()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            (List<Game>, User) data = SetupData(id);
+
+            //Action
+            IEnumerable<Game> actual = repository.SearchByParams("RPG");
+
+            //Assert
+            Assert.AreEqual(1,actual.Count());
+        }
+
         private (List<Game>, User) SetupData(Guid id)
         {
            //Set Developer
@@ -187,7 +217,7 @@ namespace Tests.RepositoriesTests
                     DeveloperId = developer.Id,
                     PublisherId = publisher.Id,
                     FranchiseId = franchise.Id,
-                    Title = $"Title game test",
+                    Title = $"Title game test assert",
                     Price = 18.99,
                     Description = "Description test",
                     Logo = "url logo game assert",
