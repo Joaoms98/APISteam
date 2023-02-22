@@ -11,9 +11,9 @@ namespace Tests.RepositoriesTests
     public class UserRepositoryTests
     {
         private DataContext context;
-        private IUserRepository repository;
         private FakeDataHelper fakeDataHelper;
-
+        private IUnitOfWork unitOfWork;
+        
         [TestInitialize]
         public void Setup()
         {
@@ -23,9 +23,9 @@ namespace Tests.RepositoriesTests
 
             context = new DataContext(options);
             fakeDataHelper = new FakeDataHelper(context);
-            repository = new UserRepository(context);
+            unitOfWork = new UnitOfWork(context);
         }
-        
+
         [TestMethod]
         public void CreatedUser_WhenCalled_ReturnSuccess()
         {
@@ -33,7 +33,7 @@ namespace Tests.RepositoriesTests
             DropDataBase();
             var email="Ok@gmail.com";
             //Action
-            repository.Create(email: email,password: "1234",nickName: "RicardoBr",country: "Brasil");
+            unitOfWork.UserRepository.Create(email: email,password: "1234",nickName: "RicardoBr",country: "Brasil");
             //Assert
             Assert.AreEqual(email,context.User.Where(u => u.Email == email).FirstOrDefault().Email);
         }
@@ -47,7 +47,7 @@ namespace Tests.RepositoriesTests
             User user = fakeDataHelper.SetupUser(new User{Id=id});
 
             //Action
-            repository.Update(id,"CanelaArg","12345","Victor","Um cara legal","Argentina","Santa Fé",
+            unitOfWork.UserRepository.Update(id,"CanelaArg","12345","Victor","Um cara legal","Argentina","Santa Fé",
             "Venado Tuerto","1231254251asdasdasda");
 
             //Assert
@@ -66,7 +66,7 @@ namespace Tests.RepositoriesTests
             User user = fakeDataHelper.SetupUser(new User{Id=id});
 
             //Action
-            repository.Delete(id);
+            unitOfWork.UserRepository.Delete(id);
 
             //Assert
             var actual = context.User.Find(id);
@@ -82,7 +82,7 @@ namespace Tests.RepositoriesTests
             User user = fakeDataHelper.SetupUser(new User{Id=id});
 
             //Action
-            var actual = repository.GetById(id);
+            var actual =  unitOfWork.UserRepository.GetById(id);
 
             //Assert
             Assert.AreEqual(actual.Id,id);
@@ -99,7 +99,7 @@ namespace Tests.RepositoriesTests
             }
 
             //Action
-            var actual = repository.ListAll();
+            var actual = unitOfWork.UserRepository.ListAll();
 
             //Assert
             Assert.AreEqual(25, actual.Count());
@@ -119,7 +119,7 @@ namespace Tests.RepositoriesTests
             }
 
             //Action
-            var actual = repository.ListByNickName("Canela");
+            var actual =  unitOfWork.UserRepository.ListByNickName("Canela");
 
             //Assert
             Assert.IsTrue(actual.Where(a => a.NickName.Contains("Canela")).Count() == 2);

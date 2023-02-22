@@ -1,4 +1,6 @@
+using APISteam.Domain.Interface;
 using APISteam.Domain.UseCases.Genre;
+using APISteam.Infra.Repositories;
 using APISteam.Infra.Services;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ public static class IoCWrapper
 {
     public static void RegisterServices(IServiceCollection services)
     {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<FeaturedAndRecommendsFilter, FeaturedAndRecommendsFilter>();
     }
 

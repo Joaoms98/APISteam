@@ -9,10 +9,8 @@ namespace Tests.RepositoriesTests
     [TestClass]
     public class CommentRepositoryTests
     {
-
         private DataContext context;
-        private ICommentRepository repository;
-
+        private IUnitOfWork unitOfWork;
 
         [TestInitialize]
         public void Setup()
@@ -22,7 +20,7 @@ namespace Tests.RepositoriesTests
             .Options;
 
             context = new DataContext(options);
-            repository = new CommentRepository(context);
+            unitOfWork = new UnitOfWork(context);
         }
 
         [TestMethod]
@@ -33,11 +31,10 @@ namespace Tests.RepositoriesTests
             (List<Comment>,List<Game>) data = SetupData(id);
 
             //Action
-            IEnumerable<Comment> actual = repository.ListByGameId(id);
+            IEnumerable<Comment> actual = unitOfWork.CommentRepository.ListByGameId(id);
 
             //Assert
             Assert.AreEqual("achei fera", actual.ElementAt(0).Description);
-
         }
 
         [TestMethod]
@@ -48,12 +45,10 @@ namespace Tests.RepositoriesTests
             (List<Comment>,List<Game>) data = SetupData(id);
 
             //Action
-            IEnumerable<Comment> actual = repository.ListByGameId(data.Item2[0].Id);
+            IEnumerable<Comment> actual = unitOfWork.CommentRepository.ListByGameId(data.Item2[0].Id);
 
             //Assert
             Assert.AreEqual(0, actual.Count());
-            
-
         } 
 
         private(List<Comment>,List<Game>) SetupData(Guid id)
@@ -144,7 +139,8 @@ namespace Tests.RepositoriesTests
                 NickName = "RicardoBr",
                 Email = "RicardoBr@gmail.com",
                 Password = "RicardoBr123",
-                Photo = "12312415125"
+                Photo = "12312415125",
+                Country = "Brasil"
             };
             context.Add(user);
             context.SaveChanges();

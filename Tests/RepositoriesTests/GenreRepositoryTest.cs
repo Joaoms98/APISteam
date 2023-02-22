@@ -13,8 +13,8 @@ namespace Tests.RepositoriesTests
     public class GenreRepositoryTest
     {
         private DataContext context;
-        private IGenreRepository repository;
         private FakeDataHelper fakeDataHelper;
+        private IUnitOfWork unitOfWork;
 
         [TestInitialize]
         public void Setup()
@@ -25,7 +25,7 @@ namespace Tests.RepositoriesTests
             
             context = new DataContext(options);
             fakeDataHelper = new FakeDataHelper(context);
-            repository = new GenreRepository(context);
+            unitOfWork = new UnitOfWork(context);
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace Tests.RepositoriesTests
             }
 
             //Action
-            IEnumerable<Genre> actual = repository.ListAll();
+            IEnumerable<Genre> actual = unitOfWork.GenreRepository.ListAll();
 
             //Assert   
             Assert.AreEqual(25, actual.Count());
@@ -53,7 +53,7 @@ namespace Tests.RepositoriesTests
             DropDataBase();
 
             //Action
-            IEnumerable<Genre> actual = repository.ListAll();
+            IEnumerable<Genre> actual = unitOfWork.GenreRepository.ListAll();
 
             //Assert   
             Assert.AreEqual(0, actual.Count());
