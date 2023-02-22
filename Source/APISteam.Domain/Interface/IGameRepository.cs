@@ -9,5 +9,6 @@ namespace APISteam.Domain.Interface
         // Game FindByIdWithAllRelationsAsync(Guid id);
         IEnumerable<Game> ListByRelevance(Guid? userId);
         IEnumerable<Game> SearchByParams(string param);
+        IEnumerable<Game> ListByGenre(Guid genreid);
     }
 }

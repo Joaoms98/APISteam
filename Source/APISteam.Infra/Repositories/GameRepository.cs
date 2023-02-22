@@ -71,5 +71,22 @@ namespace APISteam.Infra.Repositories
 
             return games;
         }
+
+
+        public IEnumerable<Game> ListByGenre(Guid genreId)
+        {
+            var games = _context.GameGenre
+            .Include(g => g.Game)
+            .Include(g => g.Genre)
+            .Where(g => g.Genre.Id == genreId)
+            .Select(g => new Game
+            {
+                Logo = g.Game.Logo,
+                Price = g.Game.Price
+            })
+            .ToList();
+    
+            return games;
+        }
     }
 }

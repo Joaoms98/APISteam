@@ -34,7 +34,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(price);
@@ -52,7 +52,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListWithSmallerPriceAsync(2);
@@ -67,7 +67,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListByRelevance(Guid.Empty);
@@ -82,7 +82,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.ListByRelevance(data.Item2.Id);
@@ -97,7 +97,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.SearchByParams("Title game test assert");
@@ -112,7 +112,7 @@ namespace Tests.RepositoriesTests
             //Arrange
             DropDataBase();
             Guid id = Guid.NewGuid();
-            (List<Game>, User) data = SetupData(id);
+            (List<Game>, User, Genre) data = SetupData(id);
 
             //Action
             IEnumerable<Game> actual = repository.SearchByParams("RPG");
@@ -121,7 +121,23 @@ namespace Tests.RepositoriesTests
             Assert.AreEqual(1,actual.Count());
         }
 
-        private (List<Game>, User) SetupData(Guid id)
+        [TestMethod]
+        public void ListGameByGenre_WhenCalled_ReturnSuccess()
+        {
+            //Arrange
+            DropDataBase();
+            Guid id = Guid.NewGuid();
+            (List<Game>, User, Genre) data = SetupData(id);
+
+
+            //Action
+            IEnumerable<Game> actual = repository.ListByGenre(data.Item3.Id);
+
+            //Assert
+            Assert.AreEqual(1,actual.Count());
+        }
+
+        private (List<Game>, User, Genre) SetupData(Guid id)
         {
            //Set Developer
             Developer developer = new Developer
@@ -235,7 +251,7 @@ namespace Tests.RepositoriesTests
             {
                 Id = Guid.NewGuid(),
                 GameId = gameAssert.Id,
-                GenreId = genres[0].Id
+                GenreId = genres[1].Id
             });
 
             gameGenres.Add(new GameGenre
@@ -311,7 +327,8 @@ namespace Tests.RepositoriesTests
                 NickName = "RicardoBr",
                 Email = "RicardoBr@gmail.com",
                 Password = "RicardoBr123",
-                Photo = "12312415125"
+                Photo = "12312415125",
+                Country = "Brasil"
             };
             context.Add(user);
             context.SaveChanges();
@@ -346,7 +363,7 @@ namespace Tests.RepositoriesTests
             // context.AddRange(systemRequirements);
             // context.SaveChanges();
 
-            return (games, user);
+            return (games, user, genres[0]);
         }
 
         private void DropDataBase()
