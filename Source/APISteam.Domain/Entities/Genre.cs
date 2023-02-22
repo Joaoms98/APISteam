@@ -12,6 +12,9 @@ namespace APISteam.Domain.Entities
         [Required]
         public int Type { get; set; }
 
+        [Required]
+        public string Image { get; set; }
+
         public virtual List<GameGenre> GameGenre { get; set; }
     }
 }

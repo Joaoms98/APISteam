@@ -7,6 +7,8 @@ namespace APISteam.Domain.Entities
     public class Video
     {
         [Key]
+        public Guid Id { get; set; }
+        
         [ForeignKey("Game")]
         public Guid GameId { get; set; }
         public Game Game { get; set; }

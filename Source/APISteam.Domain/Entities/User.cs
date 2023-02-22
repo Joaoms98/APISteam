@@ -25,6 +25,7 @@ namespace APISteam.Domain.Entities
         [StringLength(250, ErrorMessage = "The resume can be a maximum of 250 characters")]
         public string Resume { get; set; }
 
+        [Required]
         [StringLength(250, ErrorMessage = "The country can be a maximum of 250 characters")]
          public string Country { get; set; }
 
@@ -33,6 +34,9 @@ namespace APISteam.Domain.Entities
 
         [StringLength(250, ErrorMessage = "The city can be a maximum of 250 characters")]
         public string City { get; set; }
+
+        [StringLength(500)]
+        public string Photo { get; set; }
 
         public virtual Developer Developer { get; set; }
         public virtual Publisher  Publisher { get; set; }

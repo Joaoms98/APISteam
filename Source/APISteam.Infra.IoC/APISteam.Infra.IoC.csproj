@@ -2,16 +2,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\APISteam.Core\APISteam.Core.csproj" />
+    <ProjectReference Include="..\APISteam.Domain\APISteam.Domain.csproj" />
+    <ProjectReference Include="..\APISteam.Infra\APISteam.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 </Project>

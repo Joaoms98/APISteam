@@ -1,7 +1,7 @@
 using APISteam.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace APISteam.Infra.DataContext
+namespace APISteam.Infra.Data
 {
     public class DataContext : DbContext
     {
