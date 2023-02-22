@@ -1,4 +1,5 @@
 using APISteam.Domain.UseCases.Genre;
+using APISteam.Web.Filters;
 using APISteam.Web.Resources;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace APISteam.Web.Controllers;
 public class GenreController : ControllerBase
 {
     protected readonly IMapper _mapper;
+    protected readonly ExceptionFilter _exceptionFilter;
 
-    public GenreController(IMapper mapper)
+    public GenreController(IMapper mapper, ExceptionFilter exceptionFilter)
     {
         _mapper = mapper;
+        _exceptionFilter = exceptionFilter;
     }
 
     [HttpGet]
@@ -26,7 +29,7 @@ public class GenreController : ControllerBase
         }
         catch(Exception ex)
         {
-            return NotFound(ex.Message);
+            return await _exceptionFilter.MakeStatusCode(ex);
         }
     }
 }
