@@ -16,10 +16,9 @@ namespace APISteam.Infra.Repositories
 
         public void Create(string email, string password, string nickName, string country)
         {
-            var id = Guid.NewGuid();
             var user = new User()
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 NickName = nickName,
                 Email = email,
                 Password = password,
