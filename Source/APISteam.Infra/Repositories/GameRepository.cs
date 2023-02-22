@@ -1,3 +1,4 @@
+using APISteam.Core.Exceptions;
 using APISteam.Core.Utils;
 using APISteam.Domain.Entities;
 using APISteam.Domain.Interface;
@@ -75,5 +76,57 @@ namespace APISteam.Infra.Repositories
     
             return games;
         }
+
+        public void Create(Guid developerId, Guid publisherId, Guid franchiseId, string title, double price, string description, int predominantGenre)
+        {
+            var game = new Game()
+            {
+                Id = Guid.NewGuid(),
+                DeveloperId = developerId,
+                PublisherId = publisherId,
+                FranchiseId = franchiseId,
+                Title = title,
+                Price = price,
+                Description = description,
+                PredominantGenre = predominantGenre
+            };
+
+            _context.Add(game);
+            _context.SaveChanges();
+        }
+
+        public void Update(Guid id, string title, double price, string description, int predominantGenre)
+        {
+            var game = _context.Game.Find(id);
+
+            if(game is null)
+            {
+                throw new NotFoundException("Jogo não encontrado"); 
+            }
+
+            game.Title = title;
+            game.Price = price;
+            game.Description = description;
+            game.PredominantGenre = predominantGenre;
+            
+            _context.Update(game);
+            _context.SaveChanges();
+
+
+        }
+
+        public void Delete(Guid id)
+        {
+            var game = _context.Game.Find(id);
+
+            if(game is null)
+            {
+                throw new NotFoundException("Jogo não encontrado"); 
+            };
+
+            _context.Remove(game);
+            _context.SaveChanges();
+        }
+
     }
 }

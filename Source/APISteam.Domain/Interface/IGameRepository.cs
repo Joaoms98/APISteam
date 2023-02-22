@@ -9,5 +9,9 @@ namespace APISteam.Domain.Interface
         // Game FindByIdWithAllRelationsAsync(Guid id);
         IEnumerable<Game> SearchByParams(string param);
         IEnumerable<Game> ListByGenre(Guid genreid);
+        void Create(Guid developerId, Guid publisherId, Guid franchiseId,
+            string title, double price, string description, int predominantGenre);
+        void Update(Guid id, string title, double price, string description, int predominantGenre);
+        void Delete(Guid id);
     }
 }
