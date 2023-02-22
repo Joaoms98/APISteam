@@ -163,7 +163,6 @@ namespace Tests.RepositoriesTests
             {
                 Id = Guid.NewGuid(),
                 Name = "Publisher",
-                Image = "url_image"
             };
 
             context.Add(franchise);

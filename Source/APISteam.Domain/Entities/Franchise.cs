@@ -11,11 +11,7 @@ namespace APISteam.Domain.Entities
 
         [Required]
         [StringLength(255, ErrorMessage = "The franchise can be a maximum of 255 characters")]
-        public string Name { get; set; }
-        
-        [Required]
-        public string Image { get; set; }
-      
+        public string Name { get; set; }      
         public virtual List<Game> Game { get; set; }
     }
 }
