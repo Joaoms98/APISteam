@@ -43,7 +43,7 @@ public class FakeDataHelper
             Country = baseData?.Country ?? Fake.Address.Country(),
             State = baseData?.State ?? Fake.Address.State(),
             City = baseData?.City ?? Fake.Address.City(),
-            Photo = baseData?.Photo ?? Fake.Image.LoremPixelUrl("people"),
+            Photo = baseData?.Photo ?? Fake.Image.LoremPixelUrl("people")
         };
 
         _context.Add(user);

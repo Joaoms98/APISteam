@@ -22,10 +22,10 @@ namespace Tests.RepositoriesTests
             var options = new DbContextOptionsBuilder<DataContext>()
             .UseInMemoryDatabase(databaseName: "apisteam")
             .Options;
-
+            
             context = new DataContext(options);
-            repository = new GenreRepository(context);
             fakeDataHelper = new FakeDataHelper(context);
+            repository = new GenreRepository(context);
         }
 
         [TestMethod]
