@@ -21,10 +21,10 @@ namespace Tests.RepositoriesTests
             .UseInMemoryDatabase(databaseName: "apisteam")
             .Options;
 
-            fakeDataHelper = new FakeDataHelper(context);
             context = new DataContext(options);
+            fakeDataHelper = new FakeDataHelper(context);
             repository = new UserRepository(context);
-        }    
+        }
         
         [TestMethod]
         public void CreatedUser_WhenCalled_ReturnSuccess()
@@ -42,6 +42,7 @@ namespace Tests.RepositoriesTests
         public void UpdateUser_WhenCalled_ReturnSuccess()
         {
             //Arrange
+            DropDataBase();
             var id = Guid.NewGuid();
             User user = fakeDataHelper.SetupUser(new User{Id=id});
 
@@ -60,11 +61,15 @@ namespace Tests.RepositoriesTests
         public void DeleteUser_WhenCalled_ReturnSuccess()
         {
             //Arrange
-            User user = SetupUser();
+            DropDataBase();
+            var id = Guid.NewGuid();
+            User user = fakeDataHelper.SetupUser(new User{Id=id});
+
             //Action
-            repository.Delete(user.Id);
+            repository.Delete(id);
+
             //Assert
-            var actual = context.User.Find(user.Id);
+            var actual = context.User.Find(id);
             Assert.IsNull(actual);
         }
 
@@ -72,87 +77,54 @@ namespace Tests.RepositoriesTests
         public void GetUserById_WhenCalled_ReturnSuccess()
         {
             //Arrange
-            User user = SetupUser();
+            DropDataBase();
+            var id = Guid.NewGuid();
+            User user = fakeDataHelper.SetupUser(new User{Id=id});
+
             //Action
-            var actual = repository.GetById(user.Id);
+            var actual = repository.GetById(id);
+
             //Assert
-            Assert.AreEqual(actual.Id,user.Id);
+            Assert.AreEqual(actual.Id,id);
         }
 
         [TestMethod]
-        public void ListAllUsers_WhenCalled_ReturnSucess()
+        public void ListAllUsers_WhenCalled_ReturnSuccess()
         {
             //Arrange
-            List<User> user = SetupListUsers();
+            DropDataBase();
+            for(int i=0;i<25;i++)
+            {
+                fakeDataHelper.SetupUser();
+            }
+
             //Action
             var actual = repository.ListAll();
+
             //Assert
-            Assert.AreEqual(actual.Count(),user.Count());
+            Assert.AreEqual(25, actual.Count());
         }
 
         [TestMethod]
         public void ListUserByNickName_WhenCalled_ReturnSucess()
         {
             //Arrange
-            List<User> users = SetupListUsers();
-            //Action
-            var actual = repository.ListByNickName("Canela");
-            //Assert
-            Assert.IsTrue(actual.Where(a => a.NickName.Contains("Canela")).Count() == 10);
-        }
-        
-        private User SetupUser()
-        {
-            var user = new User()
-            {
-                Id = Guid.NewGuid(),
-                NickName = "CanelinhaBr",
-                Email = "canelabr@gmail.com",
-                Password = "1235",
-                Country = "Brasil"
-            };
-            context.Add(user);
-            context.SaveChanges();
-
-            return user;
-        }
-        
-        private List<User> SetupListUsers()
-        {
-            List<User> users = new List<User>();
+            DropDataBase();
+            fakeDataHelper.SetupUser(new User{NickName = "Canela_depressiva"});
+            fakeDataHelper.SetupUser(new User{NickName = "Canela_com_banana"});
 
             for(int i=0;i<10;i++)
             {
-                users.Add
-                (
-                 new User
-                 {
-                    Id = Guid.NewGuid(),
-                    Email = $"canelinha{i}@gmail.com",
-                    Password = "1234",
-                    Country = "Brasil",
-                    NickName = $"CanelaBr{i}"
-                 }
-                );
+                fakeDataHelper.SetupUser();
             }
 
-             var user = new User()
-            {
-                Id = Guid.NewGuid(),
-                NickName = "51Br",
-                Email = "51Br@gmail.com",
-                Password = "1235",
-                Country = "Brasil"
-            };
-            
-            context.Add(user);
-            context.AddRange(users);
-            context.SaveChanges();
+            //Action
+            var actual = repository.ListByNickName("Canela");
 
-            return users;
-            
+            //Assert
+            Assert.IsTrue(actual.Where(a => a.NickName.Contains("Canela")).Count() == 2);
         }
-        
+
         private void DropDataBase()
         {
             context.Database.EnsureDeleted();
