@@ -23,7 +23,7 @@ namespace Tests.RepositoriesTests
 
             context = new DataContext(options);
             filter = new FeaturedAndRecommendsFilter(context);
-            repository = new GameRepository(context, filter);
+            repository = new GameRepository(context);
         }
 
         [TestMethod]
@@ -59,36 +59,6 @@ namespace Tests.RepositoriesTests
 
             //Assert
             Assert.AreEqual(0,actual.Count());
-        }
-
-        [TestMethod]
-        public void ListByRelevance_WhenCalled_ReturnSuccess()
-        {
-            //Arrange
-            DropDataBase();
-            Guid id = Guid.NewGuid();
-            (List<Game>, User, Genre) data = SetupData(id);
-
-            //Action
-            IEnumerable<Game> actual = repository.ListByRelevance(Guid.Empty);
-
-            //Assert
-            Assert.AreEqual(id,actual.ElementAt(0).Id);
-        }
-
-        [TestMethod]
-        public void ListByRelevance_WhenCalledWithUserId_ReturnSuccess()
-        {
-            //Arrange
-            DropDataBase();
-            Guid id = Guid.NewGuid();
-            (List<Game>, User, Genre) data = SetupData(id);
-
-            //Action
-            IEnumerable<Game> actual = repository.ListByRelevance(data.Item2.Id);
-
-            //Assert
-            Assert.AreEqual(id,actual.ElementAt(0).Id);
         }
 
         [TestMethod]

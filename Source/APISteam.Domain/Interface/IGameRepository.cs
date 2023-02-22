@@ -7,7 +7,6 @@ namespace APISteam.Domain.Interface
         IEnumerable<Game> ListWithSmallerPriceAsync(double price);
         
         // Game FindByIdWithAllRelationsAsync(Guid id);
-        IEnumerable<Game> ListByRelevance(Guid? userId);
         IEnumerable<Game> SearchByParams(string param);
         IEnumerable<Game> ListByGenre(Guid genreid);
     }
