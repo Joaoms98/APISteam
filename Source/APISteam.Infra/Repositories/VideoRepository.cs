@@ -1,3 +1,5 @@
+using APISteam.Core.Exceptions;
+using APISteam.Domain.Entities;
 using APISteam.Domain.Interface;
 using APISteam.Infra.Data;
 
@@ -10,6 +12,42 @@ namespace APISteam.Infra.Repositories
         public VideoRepository(DataContext context)
         {
             _context = context;
+        }
+
+        public void Create(Guid gameId, string link)
+        {
+            Video video = new Video()
+            {
+                Id = Guid.NewGuid(),
+                GameId = gameId,
+                Link = link
+            };
+            _context.Add(video);
+            _context.SaveChanges();
+        }
+        public void Update(Guid id, string link)
+        {
+            var video = _context.Video.Find(id);
+            if(video is null)
+            {
+                throw new NotFoundException("Vídeo não encontrado");
+            }
+            
+            video.Link = link;
+            _context.Update(video);
+            _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var video = _context.Video.Find(id);
+
+            if(video is null)
+            {
+                throw new NotFoundException("Vídeo não encontrado");
+            }
+            _context.Remove(video);
+            _context.SaveChanges();
         }
     }
 }
