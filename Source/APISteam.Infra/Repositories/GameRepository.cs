@@ -60,11 +60,11 @@ namespace APISteam.Infra.Repositories
             return games;
         }
 
-
         public IEnumerable<Game> ListByGenre(Guid genreId)
         {
             var games = _context.GameGenre
             .Include(g => g.Game)
+                .IgnoreAutoIncludes()
             .Include(g => g.Genre)
             .Where(g => g.Genre.Id == genreId)
             .Select(g => new Game
@@ -77,7 +77,7 @@ namespace APISteam.Infra.Repositories
             return games;
         }
 
-        public void Create(Guid developerId, Guid publisherId, Guid franchiseId, string title, double price, string description, int predominantGenre)
+        public void Create(Guid developerId, Guid publisherId, Guid franchiseId, string title, double price, string description, string logo, int predominantGenre)
         {
             var game = new Game()
             {
@@ -88,6 +88,7 @@ namespace APISteam.Infra.Repositories
                 Title = title,
                 Price = price,
                 Description = description,
+                Logo = logo,
                 PredominantGenre = predominantGenre
             };
 
@@ -95,7 +96,7 @@ namespace APISteam.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Guid id, string title, double price, string description, int predominantGenre)
+        public void Update(Guid id, string title, double price, string description, string logo, int predominantGenre)
         {
             var game = _context.Game.Find(id);
 
@@ -107,12 +108,11 @@ namespace APISteam.Infra.Repositories
             game.Title = title;
             game.Price = price;
             game.Description = description;
+            game.Logo = logo;
             game.PredominantGenre = predominantGenre;
             
             _context.Update(game);
             _context.SaveChanges();
-
-
         }
 
         public void Delete(Guid id)
@@ -127,6 +127,5 @@ namespace APISteam.Infra.Repositories
             _context.Remove(game);
             _context.SaveChanges();
         }
-
     }
 }

@@ -14,7 +14,7 @@ namespace APISteam.Infra.Repositories
             _context = context;
         }
 
-        public void Create(string email, string password, string nickName, string country)
+        public void Create(string nickName, string email, string password, string country)
         {
             var user = new User()
             {

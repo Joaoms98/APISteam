@@ -7,7 +7,6 @@ namespace APISteam.Infra.Repositories
 {
     public class FranchiseRepository : IFranchiseRepository
     {
-
         private readonly DataContext _context;
         
         public FranchiseRepository(DataContext context)
@@ -39,7 +38,6 @@ namespace APISteam.Infra.Repositories
 
             _context.Remove(franchise);
             _context.SaveChanges();
-
         }
 
         public void Update(Guid id, string name)
