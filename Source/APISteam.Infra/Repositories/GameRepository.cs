@@ -127,5 +127,17 @@ namespace APISteam.Infra.Repositories
             _context.Remove(game);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Game> ListByFranchise(Guid franchiseId)
+        {
+            var games =  _context.Game
+            .Where(g => g.FranchiseId == franchiseId)
+            .Select(g => new Game{
+                Image = g.Image,
+                Price = g.Price
+            });
+            
+            return games;
+        }
     }
 }

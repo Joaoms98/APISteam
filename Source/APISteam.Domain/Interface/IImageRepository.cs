@@ -4,7 +4,7 @@ namespace APISteam.Domain.Interface
 {
     public interface IImageRepository
     {
-        IEnumerable<Image> ListAll();
+        IEnumerable<Image> ListAll(Guid gameId);
         void Create(Guid gameId, string link);
         void Update(Guid id, string link);
         void Delete(Guid id);

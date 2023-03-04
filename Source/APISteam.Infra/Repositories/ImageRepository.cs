@@ -59,6 +59,12 @@ namespace APISteam.Infra.Repositories
 
         }
 
-
+        public IEnumerable<Image> ListAll(Guid gameId)
+        {
+            var image =  _context.Image
+            .Where(i => i.GameId == gameId);
+            
+            return image;
+        }
     }
 }

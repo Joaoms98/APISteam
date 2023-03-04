@@ -28,6 +28,19 @@ namespace APISteam.Infra.Repositories
             _context.SaveChanges();
         }
 
+        public Developer GetById(Guid id)
+        {
+            var developer = _context.Developer.Find(id);
+
+            if(developer is null)
+            {
+                throw new NotFoundException("Desenvolvedor não encontrado");
+            }
+
+            return developer;
+
+        }
+
         public void Update(Guid id, string document, string account)
         {
             var developer = _context.Developer.Find(id);

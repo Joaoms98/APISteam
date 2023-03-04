@@ -49,5 +49,13 @@ namespace APISteam.Infra.Repositories
             _context.Remove(video);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Video> ListAll(Guid gameId)
+        {
+            var video =  _context.Video
+            .Where(v => v.GameId == gameId);
+            
+            return video;
+        }
     }
 }
