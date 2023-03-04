@@ -7,7 +7,6 @@ namespace APISteam.Infra.Repositories
 {
     public class DeveloperRepository : IDeveloperRepository
     {
-
         private readonly DataContext _context;
         
         public DeveloperRepository(DataContext context)
@@ -27,7 +26,6 @@ namespace APISteam.Infra.Repositories
 
             _context.Add(developer);
             _context.SaveChanges();
-
         }
 
         public void Update(Guid id, string document, string account)
@@ -44,7 +42,6 @@ namespace APISteam.Infra.Repositories
 
             _context.Update(developer);
             _context.SaveChanges();
-
         }
     }
 }

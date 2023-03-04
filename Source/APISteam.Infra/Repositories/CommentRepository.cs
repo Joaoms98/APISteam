@@ -8,7 +8,6 @@ namespace APISteam.Infra.Repositories
 {
     public class CommentRepository : ICommentRepository
     {
-
         private readonly DataContext _context;
 
         public CommentRepository(DataContext context)
@@ -18,7 +17,6 @@ namespace APISteam.Infra.Repositories
 
         public void Create(Guid gameId, Guid userId, string description, bool review)
         {
-           
             var comment = new Comment()
             {
                 Id = Guid.NewGuid(),
@@ -31,8 +29,8 @@ namespace APISteam.Infra.Repositories
             
             _context.Add(comment);
             _context.SaveChanges();
-            
         }
+
         public void Update(Guid id, string description, bool review)
         {
             var comment = _context.Comment.Find(id);
@@ -47,7 +45,6 @@ namespace APISteam.Infra.Repositories
             _context.Update(comment);
             _context.SaveChanges();  
         }
-
 
         public void Delete(Guid id)
         {
@@ -66,6 +63,7 @@ namespace APISteam.Infra.Repositories
             IEnumerable<Comment> comments = _context.Comment
             .Where(c => c.GameId == gameId)
             .Include(c => c.User)
+                .IgnoreAutoIncludes()
             .Select(c => new Comment{
                 Description = c.Description,
                 Review = c.Review,
@@ -79,7 +77,5 @@ namespace APISteam.Infra.Repositories
 
             return comments;
         }
-
-
     }
 }
