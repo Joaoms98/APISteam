@@ -1,4 +1,4 @@
-using APISteam.Domain.Responses.Genre;
+using APISteam.Domain.Responses;
 using APISteam.Web.Resources;
 using AutoMapper;
 

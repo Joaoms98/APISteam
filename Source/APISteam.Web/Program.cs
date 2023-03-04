@@ -18,20 +18,12 @@ builder.Services.AddDbContextPool<DataContext>(opt =>
 
 builder.Services.AddScoped<DataContext, DataContext>();
 
-// repository dependency injections.
-
-builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-
-
 builder.Services.AddApplicationServices();
 builder.Services.AddDomainServices();
 builder.Services.AddAutoMapperSettings("APISteam.Domain", "APISteam.Web");
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 

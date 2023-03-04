@@ -38,7 +38,6 @@ namespace APISteam.Infra.Repositories
             }
 
             return developer;
-
         }
 
         public void Update(Guid id, string document, string account)

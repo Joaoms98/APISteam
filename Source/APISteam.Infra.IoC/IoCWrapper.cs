@@ -1,5 +1,5 @@
 using APISteam.Domain.Interface;
-using APISteam.Domain.UseCases.Genre;
+using APISteam.Domain.UseCases;
 using APISteam.Infra.Repositories;
 using APISteam.Infra.Services;
 using AutoMapper;
@@ -18,6 +18,7 @@ public static class IoCWrapper
     public static void RegisterUseCases(IServiceCollection services)
     {
         services.AddScoped<ListAllGenresUseCase>();
+        services.AddScoped<RegisterUserUseCase>();
     }
 
     public static void ConfigureDomainServices(IServiceCollection services)

@@ -1,5 +1,5 @@
 using APISteam.Domain.Entities;
-using APISteam.Domain.Responses.Genre;
+using APISteam.Domain.Responses;
 using AutoMapper;
 
 namespace APISteam.Domain.AutoMapper

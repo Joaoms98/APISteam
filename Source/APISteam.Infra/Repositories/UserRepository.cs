@@ -24,8 +24,8 @@ namespace APISteam.Infra.Repositories
                 Password = password,
                 Country = country
             };
+            
             _context.Add(user);
-            _context.SaveChanges();
         }
 
         public void Update(Guid id, string nickName, string password, string realName, string resume, string country, string state, string city, string photo)
@@ -89,6 +89,11 @@ namespace APISteam.Infra.Repositories
             .ToList();
 
             return users;
+        }
+
+        public bool UserEmailAlreadyExists(string email)
+        {
+            return _context.User.Where(u => u.Email == email).Count() > 0;
         }
     }
 }

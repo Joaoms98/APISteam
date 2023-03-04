@@ -1,4 +1,4 @@
-using APISteam.Domain.UseCases.Genre;
+using APISteam.Domain.UseCases;
 using APISteam.Web.Filters;
 using APISteam.Web.Resources;
 using AutoMapper;

@@ -1,4 +1,4 @@
-namespace APISteam.Domain.Responses.Genre
+namespace APISteam.Domain.Responses
 {
     public class GenreListAllResponse
     {

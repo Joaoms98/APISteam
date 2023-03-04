@@ -13,5 +13,6 @@ namespace APISteam.Domain.Interface
         User GetById(Guid id);
         IEnumerable<User> ListAll();
         IEnumerable<User> ListByNickName(string nickName);
+        bool UserEmailAlreadyExists(string email);
     }
 }
