@@ -30,13 +30,8 @@ namespace APISteam.Infra.Repositories
 
         public void Update(Guid id, string nickName, string password, string realName, string resume, string country, string state, string city, string photo)
         {
-            var user = _context.User.Find(id);
+            var user = GetById(id);
             
-            if(user is null)
-            {
-                throw new NotFoundException("Usuário não encontrado");
-            }
-
             user.NickName = nickName;
             user.Password = password;
             user.RealName = realName;
@@ -47,20 +42,13 @@ namespace APISteam.Infra.Repositories
             user.Photo = photo;
             
             _context.Update(user);
-            _context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            var user = _context.User.Find(id);
-
-            if(user is null)
-            {
-                throw new NotFoundException("Usuário não encontrado");
-            }
+            var user = GetById(id);
 
             _context.Remove(user);
-            _context.SaveChanges();
         }
 
         public User GetById(Guid id)

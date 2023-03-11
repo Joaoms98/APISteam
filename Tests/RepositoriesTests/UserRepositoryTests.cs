@@ -34,6 +34,8 @@ namespace Tests.RepositoriesTests
             var email="Ok@gmail.com";
             //Action
             unitOfWork.UserRepository.Create(email: email,password: "1234",nickName: "RicardoBr",country: "Brasil");
+            context.SaveChanges();
+
             //Assert
             Assert.AreEqual(email,context.User.Where(u => u.Email == email).FirstOrDefault().Email);
         }
@@ -67,6 +69,8 @@ namespace Tests.RepositoriesTests
 
             //Action
             unitOfWork.UserRepository.Delete(id);
+            context.SaveChanges();
+
 
             //Assert
             var actual = context.User.Find(id);

@@ -19,6 +19,8 @@ public static class IoCWrapper
     {
         services.AddScoped<ListAllGenresUseCase>();
         services.AddScoped<RegisterUserUseCase>();
+        services.AddScoped<UpdateUserUseCase>();
+        services.AddScoped<DeleteUserUseCase>();
     }
 
     public static void ConfigureDomainServices(IServiceCollection services)

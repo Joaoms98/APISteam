@@ -31,7 +31,7 @@ public class ExceptionFilter : ControllerBase
 
             if(ex is ValidationException)
             {
-                return UnprocessableEntity($"{ex.Data.Keys},{ex.Data.Values}");
+                return UnprocessableEntity(new {ex.Data});
             }
 
             return BadRequest();
